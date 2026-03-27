@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Pinterest</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; background-color: #fff; }
+        nav { padding: 15px 30px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ddd; position: sticky; top:0; background: white; z-index: 100; }
+        .logo { color: #e60023; font-weight: bold; font-size: 24px; }
+        .container { column-count: 5; column-gap: 15px; padding: 20px; }
+        @media (max-width: 1200px) { .container { column-count: 4; } }
+        @media (max-width: 800px) { .container { column-count: 2; } }
+        .pin { break-inside: avoid; margin-bottom: 15px; border-radius: 16px; overflow: hidden; position: relative; }
+        .pin img { width: 100%; border-radius: 16px; transition: transform 0.3s; }
+        .pin:hover img { transform: scale(1.02); cursor: zoom-in; }
+        .btn { background: #e60023; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; text-decoration: none;}
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">P</div>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <button type="submit" class="btn">Upload Photo</button>
+        </form>
+        <div>
+            <span>Hi, {{ name }}!</span>
+            <a href="/logout" style="margin-left: 20px; color: gray;">Logout</a>
+        </div>
+    </nav>
+    <div class="container">
+        {% for photo in photos %}
+        <div class="pin">
+            <img src="{{ url_for('static', filename='uploads/' + photo.filename) }}">
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
